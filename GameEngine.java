@@ -13,7 +13,9 @@ public class GameEngine {
 	private StepCounter stepCounter = new StepCounter();
 	private int coinCount = 0;
 
-	// Cell Type Constants
+	/**
+	* Cell Type Constants
+	*/
 	private static final int FLOOR = 0;
 	private static final int WALL = 1;
 	private static final int COIN = 2;
