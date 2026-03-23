@@ -6,6 +6,8 @@ public class GameEngine {
 	private int playerCol;
 	private int exitRow;
 	private int exitCol;
+	private StepCounter stepCounter = new StepCounter();
+	private int coinCount = 0;
 
 	// Cell Type Constants
 	private static final int FLOOR = 0;
@@ -22,7 +24,7 @@ public class GameEngine {
 	}
 
 	public boolean playerWins() {
-		return false;
+		return playerRow == exitRow && playerCol == exitCol;
 	}
 
 	private void findPlayer() {
@@ -71,9 +73,21 @@ public class GameEngine {
 		// If you want "Player on Goal", you'd add a 6th constant.
 		board.setCell(playerRow, playerCol, FLOOR);
 
+		if (targetCell == COIN) {
+			coinCount++;
+		}
+
 		playerRow = targetRow;
 		playerCol = targetCol;
 		board.setCell(playerRow, playerCol, PLAYER);
+		stepCounter.increaseSteps();
+	}
 
+	public int getSteps() {
+		return stepCounter.getSteps();
+	}
+
+	public int getCoins() {
+		return coinCount;
 	}
 }

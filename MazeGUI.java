@@ -41,14 +41,16 @@ public class MazeGUI extends JFrame {
 					case KeyEvent.VK_LEFT -> engine.movePlayer(0, -1);
 					case KeyEvent.VK_RIGHT -> engine.movePlayer(0, 1);
 				}
+				infoPanel.setInfoSteps(engine.getSteps());
+				infoPanel.setInfoCoins(engine.getCoins());
 				gamePanel.repaint();
 
 				// Check for victory
 				if (engine.playerWins()) {
 					JOptionPane.showMessageDialog(MazeGUI.this,
 							"Congratulations! You found the exit.\nYour got "
-									+ infoPanel.getInfoSteps() * 1 + infoPanel.getInfoCoins()
-									+ "points",
+									+ (infoPanel.getInfoSteps() * -1 + infoPanel.getInfoCoins() * 5)
+									+ " points",
 							"Level Complete", JOptionPane.INFORMATION_MESSAGE);
 
 					// Optional: Disable engine to prevent movement after win
