@@ -6,6 +6,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
+/**
+ * Main GUI window for the 16-Bit Maze game.
+ * Handles user input, rendering, and game state transitions.
+ */
 public class MazeGUI extends JFrame {
 	private Board originalBoard;
 	private Board currentBoard;
@@ -15,6 +19,10 @@ public class MazeGUI extends JFrame {
 	private JMenuItem resetItem;
 	private int stepCounter;
 
+	/**
+	 * Constructs the main game window, initializes UI components,
+	 * and registers keyboard listeners for player movement.
+	 */
 	public MazeGUI() {
 		setTitle("16-Bit Maze");
 		setSize(640, 480); // Adjusted for 10x5 grid with scaling
@@ -61,6 +69,9 @@ public class MazeGUI extends JFrame {
 		});
 	}
 
+	/**
+	 * Initializes the menu bar with Open and Reset menu items.
+	 */
 	private void initMenu() {
 		JMenuBar menuBar = new JMenuBar();
 		JMenu gameMenu = new JMenu("Game");
@@ -78,6 +89,10 @@ public class MazeGUI extends JFrame {
 		setJMenuBar(menuBar);
 	}
 
+	/**
+	 * Opens a file chooser dialog to load a CSV board file.
+	 * Initializes the game engine and board with the selected file.
+	 */
 	private void openFile() {
 		JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir"));
 		int result = fileChooser.showOpenDialog(this);
@@ -97,6 +112,9 @@ public class MazeGUI extends JFrame {
 		}
 	}
 
+	/**
+	 * Resets the game to its original state by reloading the original board.
+	 */
 	private void resetGame() {
 		if (originalBoard != null) {
 			currentBoard = originalBoard.clone();
@@ -106,11 +124,16 @@ public class MazeGUI extends JFrame {
 		}
 	}
 
-	// Inner class for information panel
+	/**
+	 * Panel that displays the current step and coin counts.
+	 */
 	private class InfoPanel extends JPanel {
 		private JLabel infoSteps;
 		private JLabel infoCoins;
 
+		/**
+		 * Constructs the info panel with step and coin labels initialized to zero.
+		 */
 		public InfoPanel() {
 			this.setLayout(new FlowLayout());
 			this.add(new JLabel("Steps: "));
@@ -124,32 +147,64 @@ public class MazeGUI extends JFrame {
 			this.add(infoCoins);
 		}
 
+		/**
+		 * Updates the steps label with the given value.
+		 *
+		 * @param remainingSteps the current step count to display
+		 */
 		public void setInfoSteps(int remainingSteps) {
 			this.infoSteps.setText(Integer.toString(remainingSteps));
 		}
 
+		/**
+		 * Returns the current step count shown in the label.
+		 *
+		 * @return current step count
+		 */
 		public int getInfoSteps() {
 			return Integer.parseInt(this.infoSteps.getText());
 		}
 
+		/**
+		 * Updates the coins label with the given value.
+		 *
+		 * @param infoCoins the current coin count to display
+		 */
 		public void setInfoCoins(int infoCoins) {
 			this.infoCoins.setText(Integer.toString(infoCoins));
 		}
 
+		/**
+		 * Returns the current coin count shown in the label.
+		 *
+		 * @return current coin count
+		 */
 		public int getInfoCoins() {
 			return Integer.parseInt(this.infoCoins.getText());
 		}
 	}
 
-	// Inner class for custom rendering
+	/**
+	 * Panel responsible for rendering the maze board using colored tiles.
+	 */
 	private class GamePanel extends JPanel {
 		private Board board;
 		private final int TILE_SIZE = 64; // Scale up for visibility
 
+		/**
+		 * Sets the board to be rendered.
+		 *
+		 * @param board the board to display
+		 */
 		public void setBoard(Board board) {
 			this.board = board;
 		}
 
+		/**
+		 * Paints the maze by iterating over all cells and drawing each tile.
+		 *
+		 * @param g the Graphics context used for drawing
+		 */
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
@@ -164,6 +219,15 @@ public class MazeGUI extends JFrame {
 			}
 		}
 
+		/**
+		 * Draws a single tile at the specified pixel coordinates using a color
+		 * corresponding to the cell type.
+		 *
+		 * @param g    the Graphics context
+		 * @param type the cell type (0=floor, 1=wall, 2=coin, 5=exit, 6=player)
+		 * @param x    the x pixel coordinate
+		 * @param y    the y pixel coordinate
+		 */
 		private void drawTile(Graphics g, int type, int x, int y) {
 			// Placeholder colors until you link the sprite loading logic
 			switch (type) {
@@ -180,6 +244,11 @@ public class MazeGUI extends JFrame {
 		}
 	}
 
+	/**
+	 * Entry point for the application. Launches the GUI on the Swing event dispatch thread.
+	 *
+	 * @param args command-line arguments (not used)
+	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> new MazeGUI().setVisible(true));
 	}
