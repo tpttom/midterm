@@ -60,8 +60,8 @@ public class GameEngine {
 	 * Scans the board to find the exit position.
 	 */
 	private void findExit() {
-		for (int r = 0; r < 5; r++) {
-			for (int c = 0; c < 10; c++) {
+		for (int r = 0; r < 6; r++) {
+			for (int c = 0; c < 11; c++) {
 				if (board.getCell(r, c) == EXIT) {
 					exitRow = r;
 					exitCol = c;
